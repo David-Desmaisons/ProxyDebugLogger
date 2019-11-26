@@ -1,0 +1,31 @@
+{
+  "name": "proxy-logger",
+  "version": "1.0.0",
+  "description": "proxy logger",
+  "main": "src/index.js",
+  "scripts": {
+    "prepublishOnly": "build",
+    "build": "webpack --mode=production",
+    "test": "riteway -r @babel/register -r @babel/polyfill test/**/*.spec.js | tap-nirvana",
+    "coverage": "nyc riteway -r @babel/register -r @babel/polyfill test/*.spec.js | tap-nirvana"
+  },
+  "keywords": [
+    "proxy",
+    "log",
+    "debug"
+  ],
+  "author": "desmaisons_david@hotmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/polyfill": "^7.7.0",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/register": "^7.7.4",
+    "babel-loader": "^8.0.6",
+    "nyc": "^14.1.1",
+    "riteway": "^6.1.1",
+    "tap-nirvana": "^1.1.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}
