@@ -1,52 +1,55 @@
-import { describe, Try } from 'riteway';
+import { describe } from 'riteway';
+import { plugFakeWindow } from './Fake/FakeWindow';
 import { traceMethodCalls } from '../src/index';
 
-
-// a function to test
-const sum = (...args) => {
-  if (args.some(v => Number.isNaN(v))) throw new TypeError('NaN');
-  return args.reduce((acc, n) => acc + n, 0);
-};
-
 describe('traceMethodCalls()', async assert => {
-  const object={};
+  {
+    const simpleObject = {
+      "one": 1,
+      "two": "two",
+      "three": [
+        "v1",
+        "v2",
+        "v3"
+      ]
+    };
 
-  assert({
-    given: 'an object',
-    should: 'return the same object',
-    actual: traceMethodCalls(object),
-    expected: object
-  });
-});
+    assert({
+      given: 'an object without method',
+      should: 'return the same object',
+      actual: traceMethodCalls(simpleObject),
+      expected: simpleObject
+    });
+  }
 
-describe('sum()', async assert => {
-  const should = 'return the correct sum';
+  {
+    const window = plugFakeWindow();
 
-  assert({
-    given: 'no arguments',
-    should: 'return 0',
-    actual: sum(),
-    expected: 0
-  });
+    const objectWithMethod = {
+      id: (value) => value
+    };
 
-  assert({
-    given: 'zero',
-    should,
-    actual: sum(2, 0),
-    expected: 2
-  });
+    const transformed = traceMethodCalls(objectWithMethod);
+    const { id } = transformed;
 
-  assert({
-    given: 'negative numbers',
-    should,
-    actual: sum(1, -4),
-    expected: -3
-  });
+    ["abc", 1, null, undefined, ["a", "b"], []].forEach(value => {
+      assert({
+        given: 'a proxified object method',
+        should: `return a method performing same transformation as original: ${value} => ${value} `,
+        actual: id(value),
+        expected: value
+      });
+    });
 
-  assert({
-    given: 'NaN',
-    should: 'throw',
-    actual: Try(sum, 1, NaN).toString(),
-    expected: 'TypeError: NaN'
-  });  
+    ["abc", 1, null, undefined, ["a", "b"], []].forEach(value => {
+      id(value);
+      const expected = [`id${JSON.stringify([value])} -> ${JSON.stringify(value)}`];
+      assert({
+        given: 'a proxified object method',
+        should: `log operation for entry ${value}`,
+        actual: window.lastLog,
+        expected
+      });
+    });
+  }
 });
