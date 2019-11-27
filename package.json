@@ -6,8 +6,10 @@
   "scripts": {
     "prepublishOnly": "build",
     "build": "webpack --mode=production",
-    "test": "riteway -r @babel/register -r @babel/polyfill test/**/*.spec.js | tap-nirvana",
-    "coverage": "nyc riteway -r @babel/register -r @babel/polyfill test/*.spec.js | tap-nirvana"
+    "test:unit": "riteway -r @babel/register -r @babel/polyfill test/**/*.spec.js | tap-nirvana",
+    "test": "nyc npm run test:unit",
+    "test:coverage": "nyc --reporter=lcov npm run test:unit",
+    "test:ci": "npm run test:coverage && codecov"
   },
   "keywords": [
     "proxy",
@@ -22,6 +24,7 @@
     "@babel/preset-env": "^7.7.4",
     "@babel/register": "^7.7.4",
     "babel-loader": "^8.0.6",
+    "codecov": "^3.6.1",
     "nyc": "^14.1.1",
     "riteway": "^6.1.1",
     "tap-nirvana": "^1.1.0",

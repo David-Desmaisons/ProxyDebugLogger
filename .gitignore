@@ -5,3 +5,5 @@ test/unit/coverage
 /.vscode
 dist/
 .nyc_output/
+
+coverage/
