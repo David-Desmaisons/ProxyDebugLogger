@@ -2,9 +2,14 @@
   "name": "proxy-logger",
   "version": "1.0.0",
   "description": "proxy logger",
-  "main": "src/index.js",
+  "main": "dist/main.js",
+  "module": "dist/main.js",
+  "files": [
+    "dist/*.js",
+    "src/*"
+  ],
   "scripts": {
-    "prepublishOnly": "build",
+    "prepublishOnly": "npm run build",
     "build": "webpack --mode=production",
     "test:unit": "riteway -r @babel/register -r @babel/polyfill test/**/*.spec.js | tap-nirvana",
     "test": "nyc npm run test:unit",
