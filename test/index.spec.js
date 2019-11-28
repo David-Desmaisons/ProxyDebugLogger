@@ -51,6 +51,25 @@ describe('traceMethodCalls()', async assert => {
     });
   }
   {
+    const prefix = "myPrefix";
+    const objectWithMethod = {
+      id: (value) => value
+    };
+
+    const transformed = traceMethodCalls(objectWithMethod, prefix);
+
+    ["abc", 1, null, undefined, ["a", "b"], []].forEach(value => {
+      const { id } = transformed;
+      id(value);
+      assert({
+        given: 'a proxified object method with prefix',
+        should: `log operation for entry ${value} with a prefix`,
+        actual: window.lastLog,
+        expected: [`${prefix} id${JSON.stringify([value])} -> ${JSON.stringify(value)}`]
+      });
+    });
+  }
+  {
     class MyObject {
       constructor(value) {
         this.value = value;

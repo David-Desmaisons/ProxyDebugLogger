@@ -1,22 +1,23 @@
-function getFunctionHandler(propKey) {
+function getFunctionHandler(propKey, prefix) {
+  const realPrefix = (prefix!==null) ? `${prefix} ` : "";
   return {
     apply(target, thisArg, argumentsList) {
       const result = target.apply(thisArg, argumentsList);
       window.console.log(
-        propKey + JSON.stringify(argumentsList) + " -> " + JSON.stringify(result)
+        `${realPrefix}${propKey}${ JSON.stringify(argumentsList)} -> ${JSON.stringify(result)}`
       );
       return result;
     }
   };
 };
 
-function getProxyFunction(propKey, original) {
-  const handler = getFunctionHandler(propKey);
+function getProxyFunction(propKey, original, prefix) {
+  const handler = getFunctionHandler(propKey, prefix);
   return new Proxy(original, handler);
 }
 
 
-function getHandler() {
+function getHandler(prefix) {
   const cache = {};
   return {
     get(target, propKey) {
@@ -28,15 +29,15 @@ function getHandler() {
       if (typeof originalValue !== "function") {
         return originalValue;
       }
-      const newFunction = getProxyFunction(propKey, originalValue);
+      const newFunction = getProxyFunction(propKey, originalValue, prefix);
       cache[propKey] = newFunction;
       return newFunction;
     }
   };
 }
 
-function traceMethodCalls(obj) {
-  const handler = getHandler();
+function traceMethodCalls(obj, prefix=null) {
+  const handler = getHandler(prefix);
   return new Proxy(obj, handler);
 }
 

@@ -17,6 +17,7 @@ module.exports = {
     ]
   },
   output: {
+    libraryTarget: 'umd',
     library: 'proxyLogger',
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
