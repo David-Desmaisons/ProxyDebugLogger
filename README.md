@@ -2,6 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/proxy-debug-logger.svg)](https://www.npmjs.com/package/proxy-debug-logger)
 [![GitHub Actions](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FDavid-Desmaisons%2FProxyDebugLogger%2Fbadge&label=build&logo=none)](https://actions-badge.atrox.dev/David-Desmaisons/ProxyDebugLogger/goto)
+[![Coverage](https://codecov.io/gh/David-Desmaisons/ProxyDebugLogger/branch/master/graph/badge.svg)](https://codecov.io/gh/David-Desmaisons/ProxyDebugLogger)
 [![MIT License](https://img.shields.io/github/license/David-Desmaisons/ProxyDebugLogger.svg)](https://github.com/David-Desmaisons/ProxyDebugLogger/blob/master/LICENSE)
 
 Factory to create proxy that log any method call. For debug purpose.
