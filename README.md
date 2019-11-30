@@ -5,7 +5,7 @@
 [![Coverage](https://codecov.io/gh/David-Desmaisons/ProxyDebugLogger/branch/master/graph/badge.svg)](https://codecov.io/gh/David-Desmaisons/ProxyDebugLogger)
 [![MIT License](https://img.shields.io/github/license/David-Desmaisons/ProxyDebugLogger.svg)](https://github.com/David-Desmaisons/ProxyDebugLogger/blob/master/LICENSE)
 
-Factory to create proxy that log any method call. For debug purpose.
+Factory to create proxy that log any method call. For debug.
 
 ## Install
 ```

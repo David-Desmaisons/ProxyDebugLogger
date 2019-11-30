@@ -3,7 +3,7 @@ function getFunctionHandler(propKey, prefix) {
   return {
     apply(target, thisArg, argumentsList) {
       const result = target.apply(thisArg, argumentsList);
-      window.console.log(
+      console.log(
         `${realPrefix}${propKey}${ JSON.stringify(argumentsList)} -> ${JSON.stringify(result)}`
       );
       return result;
@@ -15,7 +15,6 @@ function getProxyFunction(propKey, original, prefix) {
   const handler = getFunctionHandler(propKey, prefix);
   return new Proxy(original, handler);
 }
-
 
 function getHandler(prefix) {
   const cache = {};

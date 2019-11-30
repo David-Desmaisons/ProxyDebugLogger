@@ -1,8 +1,11 @@
 import { describe } from 'riteway';
-import { plugFakeWindow } from './Fake/FakeWindow';
+import { plugFakeConsole } from './Fake/FakeConsole';
 import { traceMethodCalls } from '../src/index';
 
 describe('traceMethodCalls()', async assert => {
+
+  const {console, dispose} = plugFakeConsole();
+
   const simpleObject = {
     "one": 1,
     "two": "two",
@@ -19,9 +22,6 @@ describe('traceMethodCalls()', async assert => {
     actual: traceMethodCalls(simpleObject),
     expected: simpleObject
   });
-
-  const window = plugFakeWindow();
-
   {
     const objectWithMethod = {
       id: (value) => value
@@ -45,7 +45,7 @@ describe('traceMethodCalls()', async assert => {
       assert({
         given: 'a proxified object method',
         should: `log operation for entry ${value}`,
-        actual: window.lastLog,
+        actual: console.lastLog,
         expected: [`id${JSON.stringify([value])} -> ${JSON.stringify(value)}`]
       });
     });
@@ -64,7 +64,7 @@ describe('traceMethodCalls()', async assert => {
       assert({
         given: 'a proxified object method with prefix',
         should: `log operation for entry ${value} with a prefix`,
-        actual: window.lastLog,
+        actual: console.lastLog,
         expected: [`${prefix} id${JSON.stringify([value])} -> ${JSON.stringify(value)}`]
       });
     });
@@ -90,4 +90,5 @@ describe('traceMethodCalls()', async assert => {
       });
     });
   }
+  dispose();
 });
